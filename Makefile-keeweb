@@ -14,7 +14,7 @@ install:
 	mkdir -p /app/share/applications
 	mv keeweb.desktop /app/share/applications/info.keeweb.App.desktop
 	mkdir -p /app/share/icons/hicolor/256x256/apps
-	#cp app/favicon.png /app/share/icons/hicolor/256x256/apps/info.keeweb.App.png
+	cp app/favicon.png /app/share/icons/hicolor/256x256/apps/info.keeweb.App.png
 
 	cp -r * /app/share/keeweb
 
