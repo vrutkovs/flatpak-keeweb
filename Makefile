@@ -1,21 +1,18 @@
-all:
-	rm npm-shrinkwrap.json
-	npm install --no-optional
-	npm shrinkwrap --dev
-	npm install -g grunt
-	grunt -f
+all: install-deps build prune install-repo
+	flatpak update --user info.keeweb.App
 
-install:
-	mkdir -p /app/share/keeweb
+install-deps:
+	flatpak --user remote-add --if-not-exists --from gnome-nightly https://sdk.gnome.org/gnome.flatpakrepo
+	flatpak --user install gnome-nightly org.freedesktop.Platform/x86_64/1.6 org.freedesktop.Sdk/x86_64/1.6 || true
 
-	mv binary-keeweb /app/bin/keeweb
-	chmod +x /app/bin/keeweb
+build:
+	flatpak-builder --force-clean --ccache --require-changes --repo=repo \
+		--subject="Nightly build of Keeweb, `date`" \
+		${EXPORT_ARGS} app info.keeweb.App.json
 
-	mkdir -p /app/share/applications
-	mv keeweb.desktop /app/share/applications/info.keeweb.App.desktop
-	mkdir -p /app/share/icons/hicolor/256x256/apps
-	#cp app/favicon.png /app/share/icons/hicolor/256x256/apps/info.keeweb.App.png
+prune:
+	flatpak build-update-repo --prune --prune-depth=20 repo
 
-	cp -r * /app/share/keeweb
-
-.PHONY: all install
+install-repo:
+	flatpak --user remote-add --if-not-exists --no-gpg-verify nightly-keeweb ./repo
+	flatpak --user -v install nightly-keeweb info.keeweb.App || true

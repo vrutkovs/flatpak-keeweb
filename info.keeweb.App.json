@@ -32,8 +32,9 @@
                     "branch": "v1.4.0"
                 },
                 {
-                    "path": "Makefile",
-                    "type": "file"
+                    "path": "Makefile-keeweb",
+                    "type": "file",
+                    "dest-filename": "Makefile"
                 },
                 {
                     "path": "binary-keeweb",
