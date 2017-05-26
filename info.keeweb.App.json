@@ -29,7 +29,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/keeweb/keeweb",
-                    "branch": "v1.4.0"
+                    "branch": "v1.5.2"
                 },
                 {
                     "path": "Makefile-keeweb",
